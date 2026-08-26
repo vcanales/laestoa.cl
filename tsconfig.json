@@ -12,5 +12,5 @@
     "noUnusedParameters": true
   },
   "include": ["src"],
-    "exclude": ["src/client_test.ts"]
+    "exclude": ["src/client_test.ts", "src/quote_test.ts"]
 }

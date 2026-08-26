@@ -6,7 +6,7 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "check": "tsc --noEmit",
-    "test": "node --experimental-strip-types src/client_test.ts"
+    "test": "node --experimental-strip-types src/client_test.ts && node --experimental-strip-types src/quote_test.ts"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "latest",
