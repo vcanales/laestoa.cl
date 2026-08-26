@@ -16,7 +16,7 @@ export const quotes: readonly Quote[] = [
   },
   {
     id: "epicteto-enquiridion-2",
-    text: "Las cosas que dependen de nosotros son libres por su naturaleza: nada puede forzarlas, ni servirlas de obstáculo: las que no dependen, son débiles, esclavas, inciertas y extrañas.",
+    text: "Las cosas que dependen de nosotros son libres por su naturaleza: nada puede forzarlas, ni servirlas de obstáculo: las que no dependen, son débiles, esclavas, inciertas y extranjeras.",
     author: "Epicteto",
     work: "Enquiridión",
     locator: "2",
@@ -314,7 +314,7 @@ export const quotes: readonly Quote[] = [
     },
   },
   {
-    id: "marco-aurelio-meditaciones-2-11",
+    id: "marco-aurelio-meditaciones-2-2-viejo",
     text: "Hazte así la cuenta, viejo eres, no permitas más que el alma de suyo señora se esclavice, ni que sea agitada a manera de títere con el ímpetu de las pasiones contrarias a la sociedad; no te desazonen las presentes disposiciones del hado, ni las futuras te asusten.",
     author: "Marco Aurelio",
     work: "Meditaciones",
@@ -327,11 +327,11 @@ export const quotes: readonly Quote[] = [
     },
   },
   {
-    id: "marco-aurelio-meditaciones-3-10",
+    id: "marco-aurelio-meditaciones-2-14",
     text: "Por más que tú hubieses de vivir tres mil años, y, si quieres, aun treinta mil, con todo, haz por acordarte que ninguno pierde otra vida, al morir, que esta con que vive, ni vive con otra que con esta que pierde; así que, lo más largo y lo más breve de la vida, viene, al cabo, a reducirse a lo mismo; porque, para todos es igual aquel momento presente en que se vive.",
     author: "Marco Aurelio",
     work: "Meditaciones",
-    locator: "4.5",
+    locator: "2.14",
     source: {
       translator: "Jacinto Díaz de Miranda",
       edition: "Soliloquios o reflexiones morales del emperador Marco Aurelio, in Obras de los moralistas griegos, Biblioteca Clásica CXVII, Madrid, Viuda de Hernando y Ca.",
@@ -484,7 +484,7 @@ export const quotes: readonly Quote[] = [
   },
   {
     id: "marco-aurelio-meditaciones-8-2",
-    text: "Yo consto de cuerpo y de alma: al cuerpecito, pues, todo le es indiferente, porque no puede discenir nada; al alma también es indiferente todo aquello que no sea acción suya peculiar, pero penden de su arbitrio todas sus obras particulares.",
+    text: "Yo consto de cuerpo y de alma: al cuerpecito, pues, todo le es indiferente, porque no puede discernir nada; al alma también es indiferente todo aquello que no sea acción suya peculiar, pero penden de su arbitrio todas sus obras particulares.",
     author: "Marco Aurelio",
     work: "Meditaciones",
     locator: "8.2",
@@ -912,7 +912,7 @@ export const quotes: readonly Quote[] = [
     },
   },
   {
-    id: "marco-aurelio-meditaciones-4-26",
+    id: "marco-aurelio-meditaciones-4-49-promontorio",
     text: "Haz por ser semejante a un promontorio contra quien las olas de la mar se estrellan de continuo y él se mantiene inmóvil, mientras que ellas hinchadas caen y se adormecen alrededor.",
     author: "Marco Aurelio",
     work: "Meditaciones",
