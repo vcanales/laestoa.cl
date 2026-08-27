@@ -2,7 +2,7 @@
 
 Una cita estoica al día, en español, servida por un Cloudflare Worker. Las visitas del mismo día civil en America/Santiago ven la misma cita.
 
-Fuentes y criterio de dominio público: [docs/fuentes.md](docs/fuentes.md).
+Fuentes: [docs/fuentes.md](docs/fuentes.md).
 
 ## Local
 

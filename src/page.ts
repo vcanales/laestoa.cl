@@ -183,7 +183,6 @@ export type EditionNote = {
   works: string;
   translator: string;
   bibliographic: string;
-  license: string;
   url: string;
   urlLabel: string;
 };
@@ -195,8 +194,6 @@ export const EDITIONS: readonly EditionNote[] = [
     translator: "Enrique Ataide y Portugal",
     bibliographic:
       "Manual de Epicteto, Madrid, Oficina de Aznar, 1802. Traducción del francés.",
-    license:
-      "Dominio público: publicada en 1802 (antes de 1931). El traductor es del siglo XVIII-XIX y la edición está fuera de plazo en Chile (vida+70) y en Estados Unidos.",
     url: "https://archive.org/details/BRes111594",
     urlLabel: "Internet Archive",
   },
@@ -206,19 +203,15 @@ export const EDITIONS: readonly EditionNote[] = [
     translator: "Jacinto Díaz de Miranda",
     bibliographic:
       "Soliloquios o reflexiones morales del emperador Marco Aurelio, in Obras de los moralistas griegos, Biblioteca Clásica CXVII, Madrid, Viuda de Hernando y Ca., 1888. Reimprime la versión de 1785.",
-    license:
-      "Dominio público: traducción de 1785, reimpresa en 1888 (antes de 1931). Jacinto Díaz de Miranda murió en el siglo XIX.",
     url: "https://archive.org/details/marcusaurelius_obrasdelosmoralistasgriegos_1888",
     urlLabel: "Internet Archive",
   },
   {
     author: "Séneca",
     works: "Cartas a Lucilio",
-    translator: "Francisco Navarro y Calvo (1820-1906)",
+    translator: "Francisco Navarro y Calvo",
     bibliographic:
       "Epístolas morales, Biblioteca Clásica LXVI, Madrid, Luis Navarro, 1884.",
-    license:
-      "Dominio público: publicada en 1884 (antes de 1931). El traductor murió en 1906; en Chile el plazo vida+70 venció en 1976.",
     url: "https://es.wikisource.org/wiki/Archivo:Ep%C3%ADstolas_morales_-_bdh0000051763.pdf",
     urlLabel: "Wikisource (BNE/BDH)",
   },
@@ -226,11 +219,9 @@ export const EDITIONS: readonly EditionNote[] = [
     author: "Séneca",
     works:
       "Sobre la providencia, Sobre la vida bienaventurada, Sobre la tranquilidad del ánimo, Sobre la brevedad de la vida",
-    translator: "Pedro Fernández Navarrete (1564-1632)",
+    translator: "Pedro Fernández Navarrete",
     bibliographic:
       "Tratados filosóficos, Tomo I, Biblioteca Clásica LXVII, Madrid, Luis Navarro, 1884. El texto citado se tomó de la reimpresión de Perlado Páez y Ca., Sucesores de Hernando, 1908.",
-    license:
-      "Dominio público: el traductor murió en 1632. La reimpresión de 1884/1908 es anterior a 1931.",
     url: "https://archive.org/details/tratadosfilosfi00navagoog",
     urlLabel: "Internet Archive",
   },
@@ -250,7 +241,6 @@ export function renderFuentes(): string {
         .map((edition) => {
           return `<li>
         <p><strong>${escapeHtml(edition.works)}</strong>. ${escapeHtml(edition.translator)}. ${escapeHtml(edition.bibliographic)}</p>
-        <p>${escapeHtml(edition.license)}</p>
         <p><a href="${escapeHtml(edition.url)}">${escapeHtml(edition.urlLabel)}</a></p>
       </li>`;
         })
@@ -264,7 +254,7 @@ export function renderFuentes(): string {
     `<main>
     <article>
       <h1>Fuentes</h1>
-      <p>El griego y el latín son antiguos. El español de este sitio se copia de las ediciones que siguen, no se traduce de nuevo.</p>
+      <p>El español de este sitio se copia de traducciones antiguas de dominio público.</p>
       ${sections}
       <footer class="links">
         <a href="/">hoy</a>
@@ -280,7 +270,7 @@ export function formatFuentesPlain(): string {
   const blocks = [
     "Fuentes",
     "",
-    "El griego y el latín son antiguos. El español de este sitio se copia de las ediciones que siguen, no se traduce de nuevo.",
+    "El español de este sitio se copia de traducciones antiguas de dominio público.",
   ];
   let currentAuthor = "";
   for (const edition of EDITIONS) {
@@ -291,7 +281,6 @@ export function formatFuentesPlain(): string {
     blocks.push(
       "",
       `${edition.works}. ${edition.translator}. ${edition.bibliographic}`,
-      edition.license,
       edition.url,
     );
   }
