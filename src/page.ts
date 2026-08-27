@@ -34,6 +34,10 @@ const SHARED_CSS = `
       padding: 2.5rem 1.5rem 4.25rem;
     }
 
+    body:has(article) {
+      justify-content: flex-start;
+    }
+
     main {
       width: 100%;
       max-width: 36rem;
@@ -69,11 +73,16 @@ const SHARED_CSS = `
       bottom: 0;
       left: 0;
       right: 0;
+      z-index: 1;
       display: flex;
       justify-content: center;
-      gap: 1.15rem;
-      padding: 0.7rem 1.5rem 1.05rem;
-      font-size: 0.68rem;
+      gap: 2.25rem;
+      padding: 0.85rem 1.5rem 1.15rem;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--muted);
       background: var(--bg);
     }
@@ -81,10 +90,6 @@ const SHARED_CSS = `
     nav a {
       color: inherit;
       text-decoration: none;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
     }
 
     article h1 {
