@@ -11,9 +11,9 @@ workers_dev = true
 # Delete that A record in DNS > Records, uncomment the route, then redeploy.
 # Do not invent a zone_id here.
 # Dashboard alternative: Worker > Settings > Domains & Routes > Add > Custom Domain.
-# [[routes]]
-# pattern = "laestoa.cl"
-# custom_domain = true
+[[routes]]
+pattern = "laestoa.cl"
+custom_domain = true
 
 # Zone DDoS mitigation is automatic once this Worker is routed on laestoa.cl.
 # Bot Fight Mode is a dashboard setting and is not expressed here.
