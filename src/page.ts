@@ -24,15 +24,18 @@ const SHARED_CSS = `
 
     body {
       min-height: 100dvh;
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       background: var(--bg);
       color: var(--fg);
       font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-      padding: 2.5rem 1.5rem;
+      padding: 2.5rem 1.5rem 4.25rem;
     }
 
     main {
+      width: 100%;
       max-width: 36rem;
       animation: rise 0.7s ease;
     }
@@ -61,8 +64,27 @@ const SHARED_CSS = `
       text-decoration: underline;
     }
 
-    footer .links {
-      margin-top: 0.85rem;
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 1.15rem;
+      padding: 0.7rem 1.5rem 1.05rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+      background: var(--bg);
+    }
+
+    nav a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
     }
 
     article h1 {
@@ -97,7 +119,7 @@ const SHARED_CSS = `
     }
 
     article a {
-      color: inherit;
+      color: var(--muted);
     }
 
     article ul {
@@ -131,6 +153,12 @@ function shell(title: string, body: string): string {
 `;
 }
 
+function siteNav(links: readonly { href: string; label: string }[]): string {
+  return `<nav>
+    ${links.map((link) => `<a href="${link.href}">${link.label}</a>`).join("\n    ")}
+  </nav>`;
+}
+
 export function renderPage(quote: Quote): string {
   const text = escapeHtml(quote.text);
   const author = escapeHtml(quote.author);
@@ -144,17 +172,14 @@ export function renderPage(quote: Quote): string {
     <blockquote>
       <p>${text}</p>
       <footer>
-        ${author}, ${work} ${locator}
-        <div class="links">
-          <a href="/q/${id}">/q/${id}</a>
-          &nbsp;&nbsp;
-          <a href="/fuentes">fuentes</a>
-          &nbsp;&nbsp;
-          <a href="/preguntas">preguntas</a>
-        </div>
+        <a href="/q/${id}">${author}, ${work} ${locator}</a>
       </footer>
     </blockquote>
-  </main>`,
+  </main>
+  ${siteNav([
+    { href: "/fuentes", label: "fuentes" },
+    { href: "/preguntas", label: "preguntas" },
+  ])}`,
   );
 }
 
@@ -164,17 +189,13 @@ export function renderNotFound(): string {
     `<main>
     <blockquote>
       <p>No se encontró esa cita.</p>
-      <footer>
-        <div class="links">
-          <a href="/">hoy</a>
-          &nbsp;&nbsp;
-          <a href="/fuentes">fuentes</a>
-          &nbsp;&nbsp;
-          <a href="/preguntas">preguntas</a>
-        </div>
-      </footer>
     </blockquote>
-  </main>`,
+  </main>
+  ${siteNav([
+    { href: "/", label: "hoy" },
+    { href: "/fuentes", label: "fuentes" },
+    { href: "/preguntas", label: "preguntas" },
+  ])}`,
   );
 }
 
@@ -256,13 +277,12 @@ export function renderFuentes(): string {
       <h1>Fuentes</h1>
       <p>El español de este sitio se copia de traducciones antiguas de dominio público.</p>
       ${sections}
-      <footer class="links">
-        <a href="/">hoy</a>
-        &nbsp;&nbsp;
-        <a href="/preguntas">preguntas</a>
-      </footer>
     </article>
-  </main>`,
+  </main>
+  ${siteNav([
+    { href: "/", label: "hoy" },
+    { href: "/preguntas", label: "preguntas" },
+  ])}`,
   );
 }
 
@@ -288,7 +308,7 @@ export function formatFuentesPlain(): string {
   return `${blocks.join("\n")}\n`;
 }
 
-const FAQ: readonly { q: string; a: string }[] = [
+const FAQ: readonly { q: string; a: string; html?: string }[] = [
   {
     q: "¿Qué es laestoa.cl?",
     a: "Un sitio con una cita estoica al día, tomada de Epicteto, Marco Aurelio o Séneca. Cada jornada, en Chile, todas las visitas ven la misma.",
@@ -303,7 +323,8 @@ const FAQ: readonly { q: string; a: string }[] = [
   },
   {
     q: "¿De dónde sale el texto en español?",
-    a: "De traducciones antiguas de dominio público. La lista de ediciones está en Fuentes.",
+    a: "De traducciones antiguas de dominio público. La lista de ediciones está en Fuentes (/fuentes).",
+    html: 'De traducciones antiguas de dominio público. La lista de ediciones está en <a href="/fuentes">Fuentes</a>.',
   },
   {
     q: "¿Puedo guardar una cita?",
@@ -312,9 +333,10 @@ const FAQ: readonly { q: string; a: string }[] = [
 ];
 
 export function renderPreguntas(): string {
-  const items = FAQ.map(
-    (item) => `<dt>${escapeHtml(item.q)}</dt>\n      <dd>${escapeHtml(item.a)}</dd>`,
-  ).join("\n      ");
+  const items = FAQ.map((item) => {
+    const answer = item.html ?? escapeHtml(item.a);
+    return `<dt>${escapeHtml(item.q)}</dt>\n      <dd>${answer}</dd>`;
+  }).join("\n      ");
 
   return shell(
     "Preguntas",
@@ -324,13 +346,12 @@ export function renderPreguntas(): string {
       <dl>
       ${items}
       </dl>
-      <footer class="links">
-        <a href="/">hoy</a>
-        &nbsp;&nbsp;
-        <a href="/fuentes">fuentes</a>
-      </footer>
     </article>
-  </main>`,
+  </main>
+  ${siteNav([
+    { href: "/", label: "hoy" },
+    { href: "/fuentes", label: "fuentes" },
+  ])}`,
   );
 }
 
