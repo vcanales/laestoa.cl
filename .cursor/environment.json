@@ -1,0 +1,17 @@
+{
+  "name": "laestoa.cl",
+  "install": "export NVM_DIR=\"$HOME/.nvm\" && . \"$NVM_DIR/nvm.sh\" && nvm install 24 && nvm alias default 24 && nvm use 24 && npm ci",
+  "terminals": [
+    {
+      "name": "wrangler dev",
+      "command": "export NVM_DIR=\"$HOME/.nvm\" && . \"$NVM_DIR/nvm.sh\" && nvm use 24 && npx wrangler dev --ip 127.0.0.1 --port 8787",
+      "description": "Local Cloudflare Worker dev server for laestoa.cl on http://127.0.0.1:8787"
+    }
+  ],
+  "ports": [
+    {
+      "name": "wrangler dev",
+      "port": 8787
+    }
+  ]
+}
