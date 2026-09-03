@@ -5,6 +5,11 @@ compatibility_date = "2026-08-26"
 # workers.dev stays available as <worker>.<account-subdomain>.workers.dev.
 workers_dev = true
 
+# PostHog project token is a public client key (safe in [vars] / HTML snippet).
+[vars]
+POSTHOG_PROJECT_TOKEN = "phc_yWhysZfTw2yQX9bEmLrSVB4BDZbzvvL9hehbhzTZ2nJ7"
+POSTHOG_HOST = "https://us.i.posthog.com"
+
 # Custom domain: this Worker is the origin for laestoa.cl. No zone_id is required.
 # Prerequisite: laestoa.cl must already be an active zone on this Cloudflare account.
 # Blocked by leftover A record laestoa.cl -> 178.128.137.126 (old DigitalOcean).

@@ -1,3 +1,5 @@
+import type { AnalyticsEnv } from "./analytics";
+import { posthogSnippet } from "./analytics";
 import { escapeHtml, type Quote } from "./quote";
 
 const SHARED_CSS = `
@@ -141,7 +143,7 @@ const SHARED_CSS = `
     }
 `;
 
-function shell(title: string, body: string): string {
+function shell(title: string, body: string, analytics: AnalyticsEnv): string {
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -150,6 +152,7 @@ function shell(title: string, body: string): string {
   <title>${escapeHtml(title)}</title>
   <style>${SHARED_CSS}
   </style>
+  ${posthogSnippet(analytics)}
 </head>
 <body>
   ${body}
@@ -164,7 +167,7 @@ function siteNav(links: readonly { href: string; label: string }[]): string {
   </nav>`;
 }
 
-export function renderPage(quote: Quote): string {
+export function renderPage(quote: Quote, analytics: AnalyticsEnv): string {
   const text = escapeHtml(quote.text);
   const author = escapeHtml(quote.author);
   const work = escapeHtml(quote.work);
@@ -185,10 +188,11 @@ export function renderPage(quote: Quote): string {
     { href: "/fuentes", label: "fuentes" },
     { href: "/preguntas", label: "preguntas" },
   ])}`,
+    analytics,
   );
 }
 
-export function renderNotFound(): string {
+export function renderNotFound(analytics: AnalyticsEnv): string {
   return shell(
     "laestoa",
     `<main>
@@ -201,6 +205,7 @@ export function renderNotFound(): string {
     { href: "/fuentes", label: "fuentes" },
     { href: "/preguntas", label: "preguntas" },
   ])}`,
+    analytics,
   );
 }
 
@@ -253,7 +258,7 @@ export const EDITIONS: readonly EditionNote[] = [
   },
 ];
 
-export function renderFuentes(): string {
+export function renderFuentes(analytics: AnalyticsEnv): string {
   const groups = new Map<string, EditionNote[]>();
   for (const edition of EDITIONS) {
     const list = groups.get(edition.author) ?? [];
@@ -288,6 +293,7 @@ export function renderFuentes(): string {
     { href: "/", label: "hoy" },
     { href: "/preguntas", label: "preguntas" },
   ])}`,
+    analytics,
   );
 }
 
@@ -337,7 +343,7 @@ const FAQ: readonly { q: string; a: string; html?: string }[] = [
   },
 ];
 
-export function renderPreguntas(): string {
+export function renderPreguntas(analytics: AnalyticsEnv): string {
   const items = FAQ.map((item) => {
     const answer = item.html ?? escapeHtml(item.a);
     return `<dt>${escapeHtml(item.q)}</dt>\n      <dd>${answer}</dd>`;
@@ -357,6 +363,7 @@ export function renderPreguntas(): string {
     { href: "/", label: "hoy" },
     { href: "/fuentes", label: "fuentes" },
   ])}`,
+    analytics,
   );
 }
 

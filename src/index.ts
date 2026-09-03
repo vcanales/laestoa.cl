@@ -1,3 +1,4 @@
+import { captureWorkerEvent } from "./analytics";
 import { isBrowser } from "./client";
 import { dayIndex, secondsUntilSantiagoMidnight, santiagoMidnightExpires, santiagoYmd } from "./day";
 import {
@@ -13,6 +14,8 @@ import { quotes } from "./quotes";
 
 export type Env = {
   CLI_RATE_LIMIT: RateLimit;
+  POSTHOG_PROJECT_TOKEN: string;
+  POSTHOG_HOST: string;
 };
 
 const RETRY_AFTER_SECONDS = "60";
@@ -48,7 +51,7 @@ export default {
     const route = classifyPath(new URL(request.url).pathname);
     const browser = isBrowser(request);
     const response = browser
-      ? htmlResponse(route)
+      ? htmlResponse(request, env, ctx, route)
       : await cliResponse(request, env, ctx, route);
 
     if (request.method === "HEAD") {
@@ -84,15 +87,32 @@ function htmlHeaders(status: number): HeadersInit {
   };
 }
 
-function htmlResponse(route: Route): Response {
+function analyticsEnv(env: Env) {
+  return {
+    POSTHOG_PROJECT_TOKEN: env.POSTHOG_PROJECT_TOKEN,
+    POSTHOG_HOST: env.POSTHOG_HOST,
+  };
+}
+
+function htmlResponse(
+  request: Request,
+  env: Env,
+  ctx: ExecutionContext,
+  route: Route,
+): Response {
+  const analytics = analyticsEnv(env);
+  const url = request.url;
+
   if (route.kind === "fuentes") {
-    return new Response(renderFuentes(), { headers: htmlHeaders(200) });
+    captureWorkerEvent(analytics, ctx, "fuentes_viewed", { $current_url: url });
+    return new Response(renderFuentes(analytics), { headers: htmlHeaders(200) });
   }
   if (route.kind === "preguntas") {
-    return new Response(renderPreguntas(), { headers: htmlHeaders(200) });
+    captureWorkerEvent(analytics, ctx, "preguntas_viewed", { $current_url: url });
+    return new Response(renderPreguntas(analytics), { headers: htmlHeaders(200) });
   }
   if (route.kind === "missing") {
-    return new Response(renderNotFound(), { status: 404, headers: htmlHeaders(404) });
+    return new Response(renderNotFound(analytics), { status: 404, headers: htmlHeaders(404) });
   }
 
   const quote =
@@ -101,10 +121,18 @@ function htmlResponse(route: Route): Response {
       : findQuoteById(quotes, route.id);
 
   if (!quote) {
-    return new Response(renderNotFound(), { status: 404, headers: htmlHeaders(404) });
+    return new Response(renderNotFound(analytics), { status: 404, headers: htmlHeaders(404) });
   }
 
-  return new Response(renderPage(quote), { headers: htmlHeaders(200) });
+  captureWorkerEvent(analytics, ctx, "quote_viewed", {
+    $current_url: url,
+    quote_id: quote.id,
+    author: quote.author,
+    work: quote.work,
+    route: route.kind,
+  });
+
+  return new Response(renderPage(quote, analytics), { headers: htmlHeaders(200) });
 }
 
 async function cliResponse(

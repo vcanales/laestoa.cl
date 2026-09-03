@@ -6,11 +6,14 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "check": "tsc --noEmit",
-    "test": "node --experimental-strip-types src/client_test.ts && node --experimental-strip-types src/quote_test.ts"
+    "test": "node --experimental-strip-types src/client_test.ts && node --experimental-strip-types src/quote_test.ts && node --experimental-strip-types src/analytics_test.ts"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "latest",
     "typescript": "^5.9.2",
     "wrangler": "^4.36.0"
+  },
+  "dependencies": {
+    "posthog-node": "^5.21.2"
   }
 }
