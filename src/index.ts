@@ -1,6 +1,8 @@
 import { captureWorkerEvent } from "./analytics";
 import { isBrowser } from "./client";
 import { dayIndex, secondsUntilSantiagoMidnight, santiagoMidnightExpires, santiagoYmd } from "./day";
+import { iconKind, iconResponse } from "./icon";
+import { ICON_BODIES } from "./icon_files";
 import {
   formatFuentesPlain,
   formatPreguntasPlain,
@@ -48,7 +50,20 @@ export default {
       });
     }
 
-    const route = classifyPath(new URL(request.url).pathname);
+    const url = new URL(request.url);
+    const kind = iconKind(url.pathname);
+    if (kind) {
+      const response = iconResponse(kind, ICON_BODIES[kind]);
+      if (request.method === "HEAD") {
+        return new Response(null, {
+          status: response.status,
+          headers: response.headers,
+        });
+      }
+      return response;
+    }
+
+    const route = classifyPath(url.pathname);
     const browser = isBrowser(request);
     const response = browser
       ? htmlResponse(request, env, ctx, route)

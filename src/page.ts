@@ -1,5 +1,6 @@
 import type { AnalyticsEnv } from "./analytics";
 import { posthogSnippet } from "./analytics";
+import { ICON_LINKS } from "./icon";
 import { escapeHtml, type Quote } from "./quote";
 
 const SHARED_CSS = `
@@ -150,6 +151,7 @@ function shell(title: string, body: string, analytics: AnalyticsEnv): string {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(title)}</title>
+  ${ICON_LINKS}
   <style>${SHARED_CSS}
   </style>
   ${posthogSnippet(analytics)}
