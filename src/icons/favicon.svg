@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>
+    .bg { fill: #f3ead8; }
+    .fg { fill: #2c2416; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #11100e; }
+      .fg { fill: #e8e0d0; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32"/>
+  <!-- Doric porch on a 32 grid: pediment, beam, three columns, step. -->
+  <path class="fg" fill-rule="evenodd" d="M16 4 L8 8 H6 V10 H8 V26 H4 V28 H28 V26 H24 V10 H26 V8 H24 L16 4 Z M12 10 H14 V26 H12 Z M18 10 H20 V26 H18 Z"/>
+</svg>

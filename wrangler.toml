@@ -2,6 +2,17 @@ name = "laestoa"
 main = "src/index.ts"
 compatibility_date = "2026-08-26"
 
+# Favicon files are imported as modules. fallthrough keeps the default text/data rules.
+[[rules]]
+type = "Text"
+globs = ["**/*.svg"]
+fallthrough = true
+
+[[rules]]
+type = "Data"
+globs = ["**/*.png", "**/*.ico"]
+fallthrough = true
+
 # workers.dev stays available as <worker>.<account-subdomain>.workers.dev.
 workers_dev = true
 
